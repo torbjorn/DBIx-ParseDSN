@@ -1,0 +1,11 @@
+dbi:ODBC:server=$IP;port=$PORT;database=$DBNAME;driver=FreeTDS;tds_version=8.0
+dbi:Sybase:server=$IP:$PORT;database=$DBNAME
+dbi:mysql:database=dbic_test;host=127.0.0.1
+dbi:Pg:database=dbic_test;host=127.0.0.1
+dbi:Firebird:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
+dbi:InterBase:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
+dbi:Oracle://localhost:1521/XE
+
+Urls:
+https://metacpan.org/pod/DBD::Oracle#Oracle-DRCP
+https://metacpan.org/pod/DBD::Oracle#connect

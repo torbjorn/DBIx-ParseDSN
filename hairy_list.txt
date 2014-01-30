@@ -5,7 +5,14 @@ dbi:Pg:database=dbic_test;host=127.0.0.1
 dbi:Firebird:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
 dbi:InterBase:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
 dbi:Oracle://localhost:1521/XE
+dbi:ADO:PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARS Connection=True;Initial Catalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;
+dbi:ODBC:Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb
+dbi:InterBase:db=/var/lib/firebird/2.5/data/hlaghdb.fdb
+dbi:Firebird:db=/var/lib/firebird/2.5/data/hlaghdb.fdb
 
 Urls:
 https://metacpan.org/pod/DBD::Oracle#Oracle-DRCP
 https://metacpan.org/pod/DBD::Oracle#connect
+
+IRC:
+Check with Tux or Sno on #dbi for SQL::Statement-based DSN's

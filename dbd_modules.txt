@@ -22,3 +22,26 @@ DBD::iPod
 DBD::pNET
 DBD::Cego
 DBD::Mimer
+DBD::Excel
+DBD::XBase
+DBD::Unify
+DBD::MaxDB
+DBD::Adabas
+DBD::Oracle
+DBD::Multi
+DBD::SQLite
+DBD::Google
+DBD::Sybase
+DBD::Amazon
+DBD::Ingres
+DBD::Wire10
+DBD::PgLite
+DBD::Sprite
+DBD::AnyData
+DBD::monetdb
+DBD::Fulcrum
+DBD::mysqlPP
+DBD::Sqlflex
+DBD::Ovrimos
+DBD::RDFStore
+ugh... do the rest with an api

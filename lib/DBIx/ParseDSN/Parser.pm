@@ -7,14 +7,10 @@ use Carp;
 
 use version; our $VERSION = qv('0.0.1');
 
-sub parse {
+use Moose::Role;
+use Moose::Util::TypeConstraints;
 
-
-
-}
-
-# Module implementation here
-
+requires "parse";
 
 1; # Magic true value required at end of module
 __END__
@@ -23,7 +19,7 @@ __END__
 
 =head1 NAME
 
-DBIx::ParseDSN::Parser - Default parser for dsn
+DBIx::ParseDSN::Parser - Role for all parsers
 
 =head1 VERSION
 
@@ -49,12 +45,7 @@ This document describes DBIx::ParseDSN::Parser version 0.0.1
 
 =head1 INTERFACE
 
-=for author to fill in:
-    Write a separate section listing the public components of the modules
-    interface. These normally consist of either subroutines that may be
-    exported, or methods that may be called on objects belonging to the
-    classes provided by the module.
-
+None yet.
 
 =head1 DIAGNOSTICS
 

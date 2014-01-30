@@ -8,7 +8,6 @@ use Carp;
 use version; our $VERSION = qv('0.0.1');
 
 use Moose::Role;
-use Moose::Util::TypeConstraints;
 
 requires "parse";
 

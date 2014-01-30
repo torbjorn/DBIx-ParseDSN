@@ -16,3 +16,7 @@ https://metacpan.org/pod/DBD::Oracle#connect
 
 IRC:
 Check with Tux or Sno on #dbi for SQL::Statement-based DSN's
+
+dbic repo:
+t/750firebird.t
+t/747mssql_ado.t

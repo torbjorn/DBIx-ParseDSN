@@ -9,7 +9,20 @@ use version; our $VERSION = qv('0.0.1');
 
 use Moose::Role;
 
+has dsn => ( isa => "Str", is => "rw" );
+
 requires "parse";
+
+## this is really a util function, but there is no ::Util module yet,
+## so it's here for now
+sub _split_dsn {
+
+    my $dsn = shift;
+    my @parts = split /:/, $dsn, 3;
+
+    return @parts;
+
+}
 
 1; # Magic true value required at end of module
 __END__

@@ -44,4 +44,4 @@ DBD::mysqlPP
 DBD::Sqlflex
 DBD::Ovrimos
 DBD::RDFStore
-ugh... do the rest with an api
+ugh... do the rest with a metacpan api

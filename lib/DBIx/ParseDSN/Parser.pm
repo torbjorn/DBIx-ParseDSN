@@ -11,16 +11,39 @@ use Moose::Role;
 
 has dsn => ( isa => "Str", is => "rw" );
 
-requires "parse";
+requires qw/parse is_local/;
 
-## this is really a util function, but there is no ::Util module yet,
-## so it's here for now
+## this is really a utility function, but there is no ::Util module
+## yet, so it's here for now
 sub _split_dsn {
 
     my $dsn = shift;
     my @parts = split /:/, $dsn, 3;
 
     return @parts;
+
+}
+
+## a method to check health status of parsers dsn
+sub _dsn_sanity_check {
+
+    my $self = shift;
+
+    ## it should have three groups, separated by two colons, ie:
+    ## group1:group2:group3
+    ##
+    ## group1 is probably only ever "dbi"
+    ## group2 will be the driver followed by attributes
+    ## group3 will be driver specific options. group3 may include colons
+
+    if ( not defined $self->dsn ) {
+        carp "dsn isn't set";
+        return;
+    }
+
+    if ( _split_dsn($self->dsn) != 3 ) {
+        carp "dsn does not contain the expected pattern with 2 separating colons.";
+    }
 
 }
 

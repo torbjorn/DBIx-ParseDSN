@@ -6,14 +6,17 @@ use Carp;
 
 use version; our $VERSION = qv('0.0.1');
 
-# Other recommended modules (uncomment to use):
-#  use IO::Prompt;
-#  use Perl6::Export;
-#  use Perl6::Slurp;
-#  use Perl6::Say;
+sub _parser {
+
+    my($dsn,$user,$pass) = @_;
 
 
-# Module implementation here
+
+}
+
+sub parse_dsn {
+    _parser->parse(@_);
+}
 
 
 1; # Magic true value required at end of module
@@ -50,12 +53,10 @@ This document describes DBIx::ParseDSN version 0.0.1
 
 =head1 INTERFACE
 
-=for author to fill in:
-    Write a separate section listing the public components of the modules
-    interface. These normally consist of either subroutines that may be
-    exported, or methods that may be called on objects belonging to the
-    classes provided by the module.
+=head2 parse_dsn( $dsn );
 
+Parses a dsn and returns an object that has properties reflecting the
+parameters found.
 
 =head1 DIAGNOSTICS
 

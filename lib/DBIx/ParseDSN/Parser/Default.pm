@@ -1,8 +1,11 @@
 package DBIx::ParseDSN::Parser::Default;
 
-use warnings;
+use utf8::all;
 use strict;
-use Carp;
+use autodie;
+use warnings;
+use Carp qw< carp croak confess cluck >;
+use DBI; # will use parse_dsn
 
 use version; our $VERSION = qv('0.0.1');
 
@@ -10,7 +13,23 @@ use Moose;
 
 sub parse {
 
+    my $self = shift;
 
+    if (not defined $self->dsn) {
+        carp "tried to parse dsn, but it is undef";
+        return;
+    }
+
+    $self->_dsn_sanity_check;
+
+    my ( $scheme, $driver, $attr, $attr_hash, $dsn ) =
+        DBI->parse_dsn( $self->dsn );
+
+
+
+}
+
+sub is_local {
 
 }
 
@@ -50,12 +69,9 @@ This document describes DBIx::ParseDSN::Parser::Default version 0.0.1
 
 =head1 INTERFACE
 
-=for author to fill in:
-    Write a separate section listing the public components of the modules
-    interface. These normally consist of either subroutines that may be
-    exported, or methods that may be called on objects belonging to the
-    classes provided by the module.
+=head2 parse( $dsn )
 
+Parse with default rules
 
 =head1 DIAGNOSTICS
 

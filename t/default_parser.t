@@ -106,8 +106,17 @@ test_dsn_basics(
     "server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0"
 );
 
-
-
+my $dsn = test_dsn_basics(
+    "dbi:Sybase:server=5.6.7.8:1234;database=DBNAME",
+    "Sybase",
+    { host => "5.6.7.8", port => 1234, database => "DBNAME" },
+    {
+        server => "5.6.7.8:1234",
+        database => "DBNAME",
+    },
+    undef, undef,
+    "server=5.6.7.8:1234;database=DBNAME"
+);
 
 
 done_testing;

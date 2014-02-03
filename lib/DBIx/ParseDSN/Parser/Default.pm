@@ -27,10 +27,12 @@ has attr => (
     traits => ["Hash"],
     is => "ro",
     default => sub {{}},
-    set_attr => "set",
-    get_attr => "get",
-    delete_attr => "delete",
-    attributes => "elements",
+    handles => {
+        set_attr => "set",
+        get_attr => "get",
+        delete_attr => "delete",
+        attributes => "elements",
+    }
 );
 
 sub dsn_parts {
@@ -110,7 +112,7 @@ sub parse {
 
         $self->set_attr($k, $v);
 
-        if ( my $known_attr = $attr_map{$k} ) {
+        if ( my $known_attr = $known_attr{$k} ) {
             $self->$known_attr( $v );
         }
 

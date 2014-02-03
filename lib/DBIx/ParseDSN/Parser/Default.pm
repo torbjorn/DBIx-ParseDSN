@@ -11,26 +11,37 @@ use version; our $VERSION = qv('0.0.1');
 
 use Moose;
 
-sub parse {
+has dsn => ( isa => "Str", is => "ro", required => 1 );
+
+sub dsn_parts {
+    my $self = shift;
+    return DBI->parse_dsn( $self->dsn );
+}
+
+sub driver {
 
     my $self = shift;
+    my ( $scheme, $driver, $attr, $attr_hash, $dsn ) = $self->dsn_parts;
 
-    if (not defined $self->dsn) {
-        carp "tried to parse dsn, but it is undef";
-        return;
-    }
+    return $driver;
 
-    $self->_dsn_sanity_check;
+}
+sub attr {
 
-    my ( $scheme, $driver, $attr, $attr_hash, $dsn ) =
-        DBI->parse_dsn( $self->dsn );
+    my $self = shift;
+    my ( $scheme, $driver, $attr, $attr_hash, $dsn ) = $self->dsn_parts;
 
-
+    return $attr_hash;
 
 }
 
+
 sub is_local {
 
+}
+sub is_remote {
+    my $self = shift;
+    return not $self->is_local
 }
 
 with "DBIx::ParseDSN::Parser";

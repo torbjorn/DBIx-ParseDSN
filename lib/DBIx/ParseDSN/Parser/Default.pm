@@ -35,6 +35,33 @@ has attr => (
     }
 );
 
+sub names_for_database {
+    return qw/database dbname namd db/;
+}
+sub names_for_host {
+    return qw/hostname host server/;
+}
+sub names_for_port {
+    return qw/port/;
+}
+sub known_attribute_hash {
+
+    my $self = shift;
+    my %h;
+
+    my @db_names = $self->names_for_database;
+    @h{@db_names} = ("database") x @db_names;
+
+    my @h_names = $self->names_for_host;
+    @h{@h_names} = ("host") x @h_names;
+
+    my @p_names = $self->names_for_port;
+    @h{@p_names} = ("port") x @p_names;
+
+    return %h;
+
+}
+
 sub dsn_parts {
     my $self = shift;
     return DBI->parse_dsn( $self->dsn );
@@ -83,7 +110,7 @@ sub is_local {
 sub parse {
 
     ## look for the following in the driver dsn:
-    ## 1: database: database dbname db
+    ## 1: database: database dbname name db
     ## 2: host:     hostname host server
     ## 3: port:     port
 
@@ -94,19 +121,14 @@ sub parse {
 
     my @pairs = split /;/, $self->driver_dsn;
 
-    my %known_attr = (
-        dbname   => "database",
-        db       => "database",
-        hostname => "host",
-        server   => "host",
-    );
+    my %known_attr = $self->known_attribute_hash;
 
     for (@pairs) {
 
-        my($k,$v) = split /=/, $_;
+        my($k,$v) = split /=/, $_, 2;
 
         if (not defined $v and @pairs == 1) {
-            $self->databse( $k );
+            $self->database( $k );
             return;
         }
 

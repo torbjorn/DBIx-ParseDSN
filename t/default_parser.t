@@ -14,15 +14,16 @@ my $test_dsn = "dbi:SQLite(foo=bar):dbname=foo.sqlite";
 isa_ok( my $dsn = DBIx::ParseDSN::Parser::Default->new($test_dsn),
         "DBIx::ParseDSN::Parser::Default");
 
-is( $dsn->driver, "DBD::SQLite", "sqlite driver identified" );
-cmp_deeply( $dsn->attr, {foo=>"bar"}, "attr" );
-is( $dsn->driver_dsn, "dbname=foo.sqlite", "driver dsn" );
-
-## all of it
+## DBI's parse
 cmp_deeply(
     [$dsn->dsn_parts],
     [qw/dbi SQLite foo=bar/, {foo=>"bar"}, "dbname=foo.sqlite",],
     "DBI's parse_dsn gives expected results"
 );
+
+## specifics
+is( $dsn->driver, "DBD::SQLite", "sqlite driver identified" );
+cmp_deeply( $dsn->attr, {foo=>"bar"}, "attr" );
+is( $dsn->driver_dsn, "dbname=foo.sqlite", "driver dsn" );
 
 done_testing;

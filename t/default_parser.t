@@ -24,7 +24,7 @@ throws_ok {DBIx::ParseDSN::Parser::Default->new}
     my $dsn = test_dsn_basics($test_dsn,
                               "SQLite",
                               {database => "foo.sqlite"},
-                              {database => "foo.sqlite"},
+                              {"foo.sqlite" => undef},
                               undef, undef,"foo.sqlite",
                           );
 
@@ -62,7 +62,7 @@ throws_ok {DBIx::ParseDSN::Parser::Default->new}
     my $dsn = test_dsn_basics(
         $test_dsn, "SQLite",
         { database => $filename },
-        { database => $filename },
+        { $filename => undef },
         undef, undef, $filename
     );
 
@@ -106,7 +106,7 @@ test_dsn_basics(
     "server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0"
 );
 
-my $dsn = test_dsn_basics(
+test_dsn_basics(
     "dbi:Sybase:server=5.6.7.8:1234;database=DBNAME",
     "Sybase",
     { host => "5.6.7.8", port => 1234, database => "DBNAME" },
@@ -117,6 +117,82 @@ my $dsn = test_dsn_basics(
     undef, undef,
     "server=5.6.7.8:1234;database=DBNAME"
 );
+
+
+test_dsn_basics(
+    "dbi:mysql:database=dbic_test;host=127.0.0.1",
+    "mysql",
+    { host => "127.0.0.1", database => "dbic_test" },
+    {
+        host => "127.0.0.1",
+        database => "dbic_test",
+    },
+    undef, undef,
+    "database=dbic_test;host=127.0.0.1"
+);
+
+test_dsn_basics(
+    "dbi:Pg:database=dbic_test;host=127.0.0.1",
+    "Pg",
+    { host => "127.0.0.1", database => "dbic_test" },
+    {
+        host => "127.0.0.1",
+        database => "dbic_test",
+    },
+    undef, undef,
+    "database=dbic_test;host=127.0.0.1"
+);
+
+test_dsn_basics(
+    "dbi:Firebird:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb",
+    "Firebird",
+    { database => "/var/lib/firebird/2.5/data/dbic_test.fdb" },
+    {
+        dbname=> "/var/lib/firebird/2.5/data/dbic_test.fdb",
+    },
+    undef, undef,
+    "dbname=/var/lib/firebird/2.5/data/dbic_test.fdb"
+);
+
+test_dsn_basics(
+    "dbi:InterBase:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb",
+    "InterBase",
+    { database => "/var/lib/firebird/2.5/data/dbic_test.fdb" },
+    {
+        dbname=> "/var/lib/firebird/2.5/data/dbic_test.fdb",
+    },
+    undef, undef,
+    "dbname=/var/lib/firebird/2.5/data/dbic_test.fdb"
+);
+
+test_dsn_basics(
+    "dbi:Oracle://localhost:1521/XE",
+    "Oracle",
+    { database => "XE", host => "localhost", port => 1521 },
+    {
+        "//localhost:1521/XE" => undef
+    },
+    undef, undef,
+    "//localhost:1521/XE"
+);
+
+test_dsn_basics(
+    "dbi:ADO:PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;",
+    "ADO",
+    { database => "CIS", host => "172.24.2.10",  },
+    {
+        "PROVIDER" => "sqlncli10",
+        "SERVER" => "tcp:172.24.2.10",
+        "MARSConnection" => "True",
+        "InitialCatalog" => "CIS",
+        "UID" => "cis_web",
+        "PWD" => "...",
+        "DataTypeCompatibility" => "80",
+    },
+    undef, undef,
+    "PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;"
+);
+
 
 
 done_testing;

@@ -6,6 +6,7 @@ use autodie;
 use warnings;
 use Carp qw< carp croak confess cluck >;
 use DBI; # will use parse_dsn
+use URI;
 
 use version; our $VERSION = qv('0.0.1');
 
@@ -19,8 +20,10 @@ with( 'MooseX::OneArgNew' => {
 has dsn => ( isa => "Str", is => "ro", required => 1 );
 
 has database => ( isa => "Str", is => "rw" );
-has server   => ( isa => "Str", is => "rw" );
+has host     => ( isa => "Str", is => "rw" );
 has port     => ( isa => "Int", is => "rw" );
+has driver   => ( isa => "Str", is => "rw" );
+has scheme   => ( isa => "Str", is => "rw", default => "dbi" );
 
 has attr => (
     isa => "HashRef",
@@ -35,11 +38,35 @@ has attr => (
     }
 );
 
+around host => sub {
+
+    my $orig = shift;
+    my $self = shift;
+
+    return $self->$orig unless my ($host) = @_;
+
+    $host =~ s/^tcp://;
+
+    if ( $host =~ s/:(\d+)// ) {
+        $self->port($1);
+    }
+
+    return $self->$orig($host);
+
+};
+
 sub names_for_database {
-    return qw/database dbname namd db/;
+    return (
+        qw/database dbname namd db/,
+
+        "file name", "initialcatalog", ## from ADO, but generic
+                                        ## enough to allow in this
+                                        ## module
+
+        );
 }
 sub names_for_host {
-    return qw/hostname host server/;
+    return qw/host hostname server/;
 }
 sub names_for_port {
     return qw/port/;
@@ -49,13 +76,13 @@ sub known_attribute_hash {
     my $self = shift;
     my %h;
 
-    my @db_names = $self->names_for_database;
+    my @db_names = map { lc $_ } $self->names_for_database;
     @h{@db_names} = ("database") x @db_names;
 
-    my @h_names = $self->names_for_host;
+    my @h_names = map { lc $_ } $self->names_for_host;
     @h{@h_names} = ("host") x @h_names;
 
-    my @p_names = $self->names_for_port;
+    my @p_names = map { lc $_ } $self->names_for_port;
     @h{@p_names} = ("port") x @p_names;
 
     return %h;
@@ -67,15 +94,10 @@ sub dsn_parts {
     return DBI->parse_dsn( $self->dsn );
 }
 
-sub driver {
-
+sub dbd_driver {
     my $self = shift;
-    my ( $scheme, $driver, $attr, $attr_hash, $dsn ) = $self->dsn_parts;
-
-    $driver = "DBD::" . $driver;
-
+    my $driver = "DBD::" . $self->driver;
     return $driver;
-
 }
 sub driver_attr {
 
@@ -103,7 +125,7 @@ sub is_local {
         return 1;
     }
 
-    confess "Cannot possibly determine if db is local";
+    confess "Cannot determine if db is local";
 
 }
 
@@ -119,6 +141,8 @@ sub parse {
 
     my $self = shift;
 
+    $self->driver( ($self->dsn_parts)[1] );
+
     my @pairs = split /;/, $self->driver_dsn;
 
     my %known_attr = $self->known_attribute_hash;
@@ -127,16 +151,42 @@ sub parse {
 
         my($k,$v) = split /=/, $_, 2;
 
-        if (not defined $v and @pairs == 1) {
-            $self->database( $k );
-            return;
+        ## a //foo:xyz/bar type of uri, like Oracle
+        if ( $k =~ m|^//.+/.+| and not defined $v and @pairs == 1 ) {
+
+            ## For this we offer something that works with oracle
+            my $u = URI->new;
+            $u->opaque($k);
+
+            my @p = $u->path_segments;
+
+            ## 2nd part of path is database
+            if ( $p[1] ) {
+                $self->database($p[1]);
+            };
+
+            ## host should be ok
+            if ( my $host = $u->authority ) {
+
+                ## might contain port
+                if ( $host =~ s/:(\d+)// ) {
+                    $self->port($1);
+                }
+
+                $self->host( $host );
+
+            }
+
+        }
+        elsif (not defined $v and @pairs == 1) {
+            $self->database($k);
+        }
+
+        if ( my $known_attr = $known_attr{lc $k} ) {
+            $self->$known_attr( $v );
         }
 
         $self->set_attr($k, $v);
-
-        if ( my $known_attr = $known_attr{$k} ) {
-            $self->$known_attr( $v );
-        }
 
     }
 

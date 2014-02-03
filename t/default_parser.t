@@ -35,6 +35,11 @@ use_ok("DBIx::ParseDSN::Parser::Default");
     ## parsed values
     is( $dsn->database, "foo.sqlite", "parsed database" );
 
+    ## is_local and is_remote fails
+    throws_ok {$dsn->is_local} qr/Cannot determine/, "is_local fails";
+    throws_ok {$dsn->is_remote} qr/Cannot determine/, "is_remote fails";
+
+
 }
 
 ## a SQLite dsn with driver attr and explicit db
@@ -61,6 +66,10 @@ use_ok("DBIx::ParseDSN::Parser::Default");
 
     ## parsed values
     is( $dsn->database, "foo.sqlite", "parsed database" );
+
+    ## is_local and is_remote fails
+    throws_ok {$dsn->is_local} qr/Cannot determine/, "is_local fails";
+    throws_ok {$dsn->is_remote} qr/Cannot determine/, "is_remote fails";
 
 }
 
@@ -90,6 +99,10 @@ use_ok("DBIx::ParseDSN::Parser::Default");
 
     ## parsed values
     is( $dsn->database, $filename, "parsed database" );
+
+    ## is local since file exists
+    ok( $dsn->is_local, "local since file exists" );
+    ok( !$dsn->is_remote, "isn't remote since it's local" );
 
 }
 

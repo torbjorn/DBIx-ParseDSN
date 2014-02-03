@@ -60,9 +60,9 @@ throws_ok {DBIx::ParseDSN::Parser::Default->new}
     my $test_dsn = "dbi:SQLite:" . $filename;
 
     my $dsn = test_dsn_basics(
-        $test_dsn,"SQLite",
+        $test_dsn, "SQLite",
         { database => $filename },
-        {},
+        { database => $filename },
         undef, undef, $filename
     );
 
@@ -71,5 +71,43 @@ throws_ok {DBIx::ParseDSN::Parser::Default->new}
     ok( !$dsn->is_remote, "isn't remote since it's local" );
 
 }
+
+## Check a dsn test panel one by one
+
+#     qw{
+# dbi:ODBC:server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0
+# dbi:Sybase:server=5.6.7.8:1234;database=DBNAME
+# dbi:mysql:database=dbic_test;host=127.0.0.1
+# dbi:Pg:database=dbic_test;host=127.0.0.1
+# dbi:Firebird:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
+# dbi:InterBase:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
+# dbi:Oracle://localhost:1521/XE
+# dbi:ADO:PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;
+# dbi:ODBC:Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb
+# dbi:InterBase:db=/var/lib/firebird/2.5/data/hlaghdb.fdb
+# dbi:Firebird:db=/var/lib/firebird/2.5/data/hlaghdb.fdb
+#   };
+
+note( "DSN test panel" );
+
+test_dsn_basics(
+    "dbi:ODBC:server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0",
+    "ODBC",
+    {
+        host => "1.2.3.4", port => 5678, database => "DBNAME" },
+    {
+        server => "1.2.3.4",
+        port => 5678,
+        database => "DBNAME",
+        driver => "FreeTDS",
+        tds_version => "8.0",
+    },
+    undef, undef,
+    "server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0"
+);
+
+
+
+
 
 done_testing;

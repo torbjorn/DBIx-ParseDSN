@@ -5,8 +5,9 @@ use warnings;
 use utf8;
 use Test::Most;
 use Test::FailWarnings;
-use Path::Tiny;
 use File::Temp qw/tempfile/;
+
+use t::lib::TestUtils;
 
 use_ok("DBIx::ParseDSN::Parser::Default");
 
@@ -15,38 +16,6 @@ throws_ok {DBIx::ParseDSN::Parser::Default->new}
     qr/\QAttribute (dsn) is required/,
     "dsn is required argument";
 
-sub test_dsn_basics {
-
-    my ($test_dsn,$driver,$attr,@parts) = @_;
-
-    note( $test_dsn );
-
-    my $dsn = DBIx::ParseDSN::Parser::Default->new($test_dsn);
-
-    ## DBI's parse
-    cmp_deeply(
-        [$dsn->dsn_parts],
-        ["dbi", $driver, @parts ],
-        "DBI's parse_dsn gives expected results"
-    );
-
-    ## driver
-    is( $dsn->driver, "SQLite", "driver" );
-
-    ## specifics
-    is( $dsn->dbd_driver, "DBD::" . $driver, "sqlite driver identified" );
-    cmp_deeply( $dsn->driver_attr, $parts[1], "attr" );
-    is( $dsn->driver_dsn, $parts[2], "driver dsn" );
-
-    ## parsed values
-    is( $dsn->database, $attr->{database}, "parsed database" );
-    is( $dsn->host, $attr->{host}, "host undef" );
-    is( $dsn->port, $attr->{port}, "port undef" );
-
-    return $dsn;
-
-}
-
 ## a plain SQLite dsn
 {
 
@@ -54,6 +23,7 @@ sub test_dsn_basics {
 
     my $dsn = test_dsn_basics($test_dsn,
                               "SQLite",
+                              {database => "foo.sqlite"},
                               {database => "foo.sqlite"},
                               undef, undef,"foo.sqlite",
                           );
@@ -72,6 +42,7 @@ sub test_dsn_basics {
     my $dsn = test_dsn_basics(
         $test_dsn,"SQLite",
         { database => "foo.sqlite" },
+        { dbname => "foo.sqlite" },
         "foo=bar", {foo=>"bar"}, "dbname=foo.sqlite"
     );
 
@@ -91,6 +62,7 @@ sub test_dsn_basics {
     my $dsn = test_dsn_basics(
         $test_dsn,"SQLite",
         { database => $filename },
+        {},
         undef, undef, $filename
     );
 

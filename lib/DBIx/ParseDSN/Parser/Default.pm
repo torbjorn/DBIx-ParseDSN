@@ -108,13 +108,11 @@ sub parse {
             return;
         }
 
-        $self->attr->{}
+        $self->set_attr($k, $v);
 
         if ( my $known_attr = $attr_map{$k} ) {
             $self->$known_attr( $v );
         }
-
-
 
     }
 

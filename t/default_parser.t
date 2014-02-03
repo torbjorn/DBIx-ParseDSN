@@ -34,6 +34,8 @@ use_ok("DBIx::ParseDSN::Parser::Default");
 
     ## parsed values
     is( $dsn->database, "foo.sqlite", "parsed database" );
+    is( $dsn->host, undef, "host undef" );
+    is( $dsn->port, undef, "port undef" );
 
     ## is_local and is_remote fails
     throws_ok {$dsn->is_local} qr/Cannot determine/, "is_local fails";
@@ -66,6 +68,8 @@ use_ok("DBIx::ParseDSN::Parser::Default");
 
     ## parsed values
     is( $dsn->database, "foo.sqlite", "parsed database" );
+    is( $dsn->host, undef, "host undef" );
+    is( $dsn->port, undef, "port undef" );
 
     ## is_local and is_remote fails
     throws_ok {$dsn->is_local} qr/Cannot determine/, "is_local fails";
@@ -99,6 +103,8 @@ use_ok("DBIx::ParseDSN::Parser::Default");
 
     ## parsed values
     is( $dsn->database, $filename, "parsed database" );
+    is( $dsn->host, undef, "host undef" );
+    is( $dsn->port, undef, "port undef" );
 
     ## is local since file exists
     ok( $dsn->is_local, "local since file exists" );

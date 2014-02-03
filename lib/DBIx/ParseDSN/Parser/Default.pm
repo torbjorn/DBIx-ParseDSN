@@ -11,7 +11,16 @@ use version; our $VERSION = qv('0.0.1');
 
 use Moose;
 
+with( 'MooseX::OneArgNew' => {
+    type => 'Str',
+    init_arg => 'dsn',
+});
+
 has dsn => ( isa => "Str", is => "ro", required => 1 );
+
+has database => ( isa => "Str", is => "rw" );
+has server   => ( isa => "Str", is => "rw" );
+has port     => ( isa => "Int", is => "rw" );
 
 sub dsn_parts {
     my $self = shift;
@@ -22,6 +31,8 @@ sub driver {
 
     my $self = shift;
     my ( $scheme, $driver, $attr, $attr_hash, $dsn ) = $self->dsn_parts;
+
+    $driver = "DBD::" . $driver;
 
     return $driver;
 
@@ -34,17 +45,42 @@ sub attr {
     return $attr_hash;
 
 }
-
-
-sub is_local {
-
+sub driver_dsn {
+    my $self = shift;
+    return ($self->dsn_parts)[4];
 }
+
 sub is_remote {
     my $self = shift;
     return not $self->is_local
 }
 
-with "DBIx::ParseDSN::Parser";
+sub parse {
+
+    ## look for the following in the driver dsn:
+    ## 1: database: database dbname db
+    ## 2: host:     hostname host server
+    ## 3: port:     port
+
+    ## Assumes ";"-separated parameters in driver dsn
+    ## If driver dsn is one argument, its assumed to be the database
+
+    my $self = shift;
+
+    my @pairs = split /;/, $self->driver_dsn;
+
+    for (@pairs) {
+
+        my($k,$v) = split /=/, $_;
+
+        if (not defined $v and @pairs == 1) {
+            $self->databse( $k );
+            return;
+        }
+
+    }
+
+}
 
 1; # Magic true value required at end of module
 __END__

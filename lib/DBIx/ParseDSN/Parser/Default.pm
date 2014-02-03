@@ -22,6 +22,17 @@ has database => ( isa => "Str", is => "rw" );
 has server   => ( isa => "Str", is => "rw" );
 has port     => ( isa => "Int", is => "rw" );
 
+has attr => (
+    isa => "HashRef",
+    traits => ["Hash"],
+    is => "ro",
+    default => sub {{}},
+    set_attr => "set",
+    get_attr => "get",
+    delete_attr => "delete",
+    attributes => "elements",
+);
+
 sub dsn_parts {
     my $self = shift;
     return DBI->parse_dsn( $self->dsn );
@@ -37,7 +48,7 @@ sub driver {
     return $driver;
 
 }
-sub attr {
+sub driver_attr {
 
     my $self = shift;
     my ( $scheme, $driver, $attr, $attr_hash, $dsn ) = $self->dsn_parts;
@@ -54,6 +65,18 @@ sub is_remote {
     my $self = shift;
     return not $self->is_local
 }
+sub is_local {
+    my $self = shift;
+
+    ## not much the default can do. if database exists as a file we
+    ## guess its a file based database and hence local
+    if ( -f $self->database ) {
+        return 1;
+    }
+
+    confess "Cannot possibly determine if db is local";
+
+}
 
 sub parse {
 
@@ -69,6 +92,13 @@ sub parse {
 
     my @pairs = split /;/, $self->driver_dsn;
 
+    my %known_attr = (
+        dbname   => "database",
+        db       => "database",
+        hostname => "host",
+        server   => "host",
+    );
+
     for (@pairs) {
 
         my($k,$v) = split /=/, $_;
@@ -78,11 +108,19 @@ sub parse {
             return;
         }
 
+        $self->attr->{}
+
+        if ( my $known_attr = $attr_map{$k} ) {
+            $self->$known_attr( $v );
+        }
+
+
+
     }
 
 }
 
-sub BUILD {}
+sub BUILD {};
 
 after BUILD => sub {
     my $self = shift;

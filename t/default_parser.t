@@ -8,10 +8,21 @@ use Test::FailWarnings;
 
 use_ok("DBIx::ParseDSN::Parser::Default");
 
-my $test_dsn = "dbi:SQLite:dbfile=foo.sqlite";
+my $test_dsn = "dbi:SQLite(foo=bar):dbname=foo.sqlite";
 
 ## check that dsn is required
 isa_ok( my $dsn = DBIx::ParseDSN::Parser::Default->new($test_dsn),
         "DBIx::ParseDSN::Parser::Default");
+
+is( $dsn->driver, "DBD::SQLite", "sqlite driver identified" );
+cmp_deeply( $dsn->attr, {foo=>"bar"}, "attr" );
+is( $dsn->driver_dsn, "dbname=foo.sqlite", "driver dsn" );
+
+## all of it
+cmp_deeply(
+    [$dsn->dsn_parts],
+    [qw/dbi SQLite foo=bar/, {foo=>"bar"}, "dbname=foo.sqlite",],
+    "DBI's parse_dsn gives expected results"
+);
 
 done_testing;

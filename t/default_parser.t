@@ -9,10 +9,10 @@ use File::Temp qw/tempfile/;
 
 use t::lib::TestUtils;
 
-use_ok("DBIx::ParseDSN::Parser::Default");
+use_ok("DBIx::ParseDSN::Default");
 
 ## no dsn causes error
-throws_ok {DBIx::ParseDSN::Parser::Default->new}
+throws_ok {DBIx::ParseDSN::Default->new}
     qr/\QAttribute (dsn) is required/,
     "dsn is required argument";
 
@@ -193,6 +193,16 @@ test_dsn_basics(
     "PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;"
 );
 
-
+test_dsn_basics(
+    "dbi:ODBC:Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb",
+    "ODBC",
+    { database => "/var/lib/firebird/2.5/data/hlaghdb.fdb" },
+    {
+        Driver => "Firebird",
+        Dbname => "/var/lib/firebird/2.5/data/hlaghdb.fdb",
+    },
+    undef, undef,
+    "Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb"
+);
 
 done_testing;

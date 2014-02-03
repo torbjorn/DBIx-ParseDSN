@@ -1,4 +1,4 @@
-package DBIx::ParseDSN::Parser::Default;
+package DBIx::ParseDSN::Default;
 
 use utf8::all;
 use strict;
@@ -121,7 +121,15 @@ sub is_local {
 
     ## not much the default can do. if database exists as a file we
     ## guess its a file based database and hence local
-    if ( -f $self->database ) {
+    if ( defined $self->host and
+                 (
+                 lc $self->host eq "localhost" or
+                    $self->host eq "127.0.0.1"
+                 )
+         ) {
+        return 1;
+    }
+    elsif ( -f $self->database ) {
         return 1;
     }
 

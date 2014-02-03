@@ -82,6 +82,13 @@ sub parse {
 
 }
 
+sub BUILD {}
+
+after BUILD => sub {
+    my $self = shift;
+    $self->parse;
+};
+
 1; # Magic true value required at end of module
 __END__
 

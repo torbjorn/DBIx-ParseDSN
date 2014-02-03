@@ -39,9 +39,9 @@ sub test_dsn_basics {
     is( $dsn->driver_dsn, $parts[2], "driver dsn" );
 
     ## parsed values
-    is( $dsn->database, "foo.sqlite", "parsed database" );
-    is( $dsn->host, undef, "host undef" );
-    is( $dsn->port, undef, "port undef" );
+    is( $dsn->database, $attr->{database}, "parsed database" );
+    is( $dsn->host, $attr->{host}, "host undef" );
+    is( $dsn->port, $attr->{port}, "port undef" );
 
     return $dsn;
 
@@ -81,10 +81,6 @@ sub test_dsn_basics {
 
 }
 
-done_testing
-__END__
-
-
 ## a SQLite dsn with a driver file that exists
 {
 
@@ -92,33 +88,16 @@ __END__
 
     my $test_dsn = "dbi:SQLite:" . $filename;
 
-    note( $test_dsn );
-
-    my $dsn = DBIx::ParseDSN::Parser::Default->new($test_dsn);
-
-    ## DBI's parse
-    cmp_deeply(
-        [$dsn->dsn_parts],
-        [qw/dbi SQLite/, undef, undef, $filename ,],
-        "DBI's parse_dsn gives expected results"
+    my $dsn = test_dsn_basics(
+        $test_dsn,"SQLite",
+        { database => $filename },
+        undef, undef, $filename
     );
-
-    ## specifics
-    is( $dsn->driver, "DBD::SQLite", "sqlite driver identified" );
-    cmp_deeply( $dsn->driver_attr, undef, "attr" );
-    is( $dsn->driver_dsn, $filename, "driver dsn" );
-
-    ## parsed values
-    is( $dsn->database, $filename, "parsed database" );
-    is( $dsn->host, undef, "host undef" );
-    is( $dsn->port, undef, "port undef" );
 
     ## is local since file exists
     ok( $dsn->is_local, "local since file exists" );
     ok( !$dsn->is_remote, "isn't remote since it's local" );
 
 }
-
-
 
 done_testing;

@@ -4,14 +4,12 @@ use strict;
 use warnings;
 use utf8;
 use Test::Most;
-# use Test::FailWarnings;
+use Test::FailWarnings;
 use Test::Moose;
 
-use DBIx::ParseDSN::Parser::Default;
+use DBIx::ParseDSN;
 
 use lib 't/lib';
-
-does_ok( my $p = DBIx::ParseDSN::Parser::Default->new, "DBIx::ParseDSN::Parser" );
 
 my @test_dsns = qw{
 dbi:ODBC:server=$IP;port=$PORT;database=$DBNAME;driver=FreeTDS;tds_version=8.0
@@ -41,12 +39,10 @@ my @expected_spilts = (
     [qw(dbi Firebird db=/var/lib/firebird/2.5/data/hlaghdb.fdb)],
 );
 
-*split_dsn = *DBIx::ParseDSN::Parser::_split_dsn;
-
 for ( 0..$#test_dsns ) {
 
     cmp_deeply(
-        [ split_dsn($test_dsns[$_]) ],
+        [ DBIx::ParseDSN::_split_dsn($test_dsns[$_]) ],
         $expected_spilts[$_],
         "dsn_split " . $test_dsns[$_]
     );

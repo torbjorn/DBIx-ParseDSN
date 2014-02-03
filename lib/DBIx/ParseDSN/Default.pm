@@ -214,17 +214,17 @@ __END__
 
 =head1 NAME
 
-DBIx::ParseDSN::Parser::Default - [One line description of module's purpose here]
+DBIx::ParseDSN::Default - [One line description of module's purpose here]
 
 
 =head1 VERSION
 
-This document describes DBIx::ParseDSN::Parser::Default version 0.0.1
+This document describes DBIx::ParseDSN::Default version 0.0.1
 
 
 =head1 SYNOPSIS
 
-    use DBIx::ParseDSN::Parser::Default;
+    use DBIx::ParseDSN::Default;
 
 =for author to fill in:
     Brief code example(s) here showing commonest usage(s).
@@ -244,6 +244,58 @@ This document describes DBIx::ParseDSN::Parser::Default version 0.0.1
 =head2 parse( $dsn )
 
 Parse with default rules
+
+=head2 driver_attr
+
+Any attributes to the driver, ie foo=bar in
+dbi:SQLite(foo=bar):db.sqlite. See parse_dsn in DBI.
+
+=head2 driver_dsn
+
+The 3rd part of the dsn string, that is driver specific.
+
+=head2 dsn_parts
+
+The 5 values returned by DBI->parse_dsn
+
+=head2 is_local
+
+True if the dns is local. File based db drivers are local, and network
+connections to localhost or 127.0.0.1 are local.
+
+=head2 is_remote
+
+The oposite of is_local
+
+=head2 names_for_database
+
+Name variations for the database attribute
+
+=head2 names_for_host
+
+Name variations for the host attribute
+
+=head2 names_for_port
+
+Name variations for the port attribute
+
+=head2 known_attribute_hash
+
+Combines information for the three above methods to compose a hash
+useful for translating names, eg:
+
+    (
+      database => "database",
+      dbname   => "database",
+      db       => "database",
+      server   => "host",
+      hostname => "host",
+    )
+
+=head2 dbd_driver
+
+The perl module driver for this specific dsn. Currently the 2nd value
+of the dsn string prefixed by DBD:: , ie DBD::SQLite.
 
 =head1 DIAGNOSTICS
 
@@ -277,7 +329,7 @@ Parse with default rules
     that can be set. These descriptions must also include details of any
     configuration language used.
 
-DBIx::ParseDSN::Parser::Default requires no configuration files or environment variables.
+DBIx::ParseDSN::Default requires no configuration files or environment variables.
 
 
 =head1 DEPENDENCIES

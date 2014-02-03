@@ -3,7 +3,7 @@ package DBIx::ParseDSN;
 use warnings;
 use strict;
 use Carp;
-use Module::Load;
+use Module::Load::Conditional qw/can_load/;
 
 use version; our $VERSION = qv('0.0.1');
 
@@ -41,14 +41,24 @@ sub _dsn_sanity_check {
 
 }
 
+sub _default_parser {
+    return __PACKAGE__ . "::Default";
+}
+
 sub parse_dsn {
 
-    my($dsn,$user,$pass) = @_;
+    my($dsn,$user,$pass,$attr) = @_;
 
     ## decide driver
     my($scheme,$driver) = _split_dsn($dsn);
 
+    my $parser_module = __PACKAGE__ . "::" . $driver;
 
+    if ( can_load module => $parser_module ) {
+        $parser_module = _default_parser;
+    }
+
+    return $parser_module->new($dsn);
 
 }
 

@@ -8,10 +8,10 @@ use Test::FailWarnings;
 use Test::Moose;
 
 {
-    package DBIx::ParseDSN::Parser::Custom;
+    package DBIx::ParseDSN::Custom;
 
     use Moose;
-    extends "DBIx::ParseDSN::Parser::Default";
+    extends "DBIx::ParseDSN::Default";
 
     sub names_for_database {
         return qw/bucket/;
@@ -21,9 +21,9 @@ use Test::Moose;
 
 }
 
-my $dsn = DBIx::ParseDSN::Parser::Custom->new("dbi:SQLite:bucket=bar");
+my $dsn = DBIx::ParseDSN::Custom->new("dbi:SQLite:bucket=bar");
 
-isa_ok( $dsn, "DBIx::ParseDSN::Parser::Default" );
+isa_ok( $dsn, "DBIx::ParseDSN::Default" );
 
 is( $dsn->database, "bar", "custom database label" );
 ok( $dsn->is_remote, "it is remote because it is not local" );

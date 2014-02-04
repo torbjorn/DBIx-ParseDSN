@@ -217,20 +217,11 @@ around BUILDARGS => sub {
     ## look for db in user string - will not override one found in dsn
     if ( defined $args[1] ) {
         if ( $args[1] =~ /@(.+)$/ ) {
-            $h{}
+            $h{database} = $1;
         }
     }
 
-    my $f = $args[0]->{file};
-
-    if ( defined $f and not ref $f and -r $f ) {
-        ## should now be a filename that can be read
-        ## so that size and filename can be set
-        $args[0]->{size} = -s $f;
-        $args[0]->{filename} = $f;
-    }
-
-    return $class->$orig(@args);
+    return $class->$orig($f);
 
 };
 

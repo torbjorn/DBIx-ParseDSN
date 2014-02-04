@@ -25,6 +25,7 @@ has port     => ( isa => "Int", is => "rw" );
 has driver   => ( isa => "Str", is => "rw" );
 has scheme   => ( isa => "Str", is => "rw", default => "dbi" );
 
+
 has attr => (
     isa => "HashRef",
     traits => ["Hash"],
@@ -199,6 +200,40 @@ sub parse {
     }
 
 }
+
+around BUILDARGS => sub {
+
+    my $orig = shift;
+    my $class = shift;
+
+    my @args = @_;
+
+    my %h;
+
+    ## 1st arg can be dsn if not a hash
+    if ( defined $args[0] and ref $args[0] ne "HASH" ) {
+        $h{dsn} = $args[0];
+    }
+    ## look for db in user string - will not override one found in dsn
+    if ( defined $args[1] ) {
+        if ( $args[1] =~ /@(.+)$/ ) {
+            $h{}
+        }
+    }
+
+    my $f = $args[0]->{file};
+
+    if ( defined $f and not ref $f and -r $f ) {
+        ## should now be a filename that can be read
+        ## so that size and filename can be set
+        $args[0]->{size} = -s $f;
+        $args[0]->{filename} = $f;
+    }
+
+    return $class->$orig(@args);
+
+};
+
 
 sub BUILD {};
 

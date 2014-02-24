@@ -1,6 +1,6 @@
-DBIx-ParseDSN version 0.0.1
+DBIx-ParseDSN version 0.9.0
 
-Parse any DSN for any known DBD. Starting with all drivers on CPAN.
+Parse DSN connection strings.
 
 INSTALLATION
 

@@ -23,7 +23,7 @@ require "t/lib/Foo.pm";
 
 ## a namespace that needs loading
 {
-    local @INC = qw(t/lib);
+    local @INC = ('t/lib', @INC);
     isa_ok( my $dsn = parse_dsn("dbi:Bar:database=foo"), "DBIx::ParseDSN::Bar" );
     ok( $dsn->i_am_also_a_custom_driver, "custom driver loaded" );
     ##

@@ -248,25 +248,47 @@ DBIx::ParseDSN::Default - A default DSN parser, moose based. You can
 use this as is, or subclass it. DBIx::ParseDSN uses this class unless
 it finds a better parser.
 
+It can be used directly to parse a DSN, but use instead
+L<DBIx::ParseDSN/parse_dsn> which is the intended way to achieve this.
+
 =head1 VERSION
 
 This document describes DBIx::ParseDSN::Default version 0.9.0
 
 =head1 SYNOPSIS
 
+    ## Use it directly:
+
     use DBIx::ParseDSN::Default;
 
-=for author to fill in:
-    Brief code example(s) here showing commonest usage(s).
-    This section will be as far as many users bother reading
-    so make it as educational and exeplary as possible.
+    my $dsn = DBIx::ParseDSN::Default->new( "dbi:Foo:/bar/baz" );
 
+    ## Subclass:
+    {
+      package DBIx::ParseDSN::OddBall;
+
+      use Moose;
+      extends 'DBIx::ParseDSN::Default';
+
+      sub names_for_database{ return qw/bucket/ }
+
+    }
+
+    package main;
+
+    use DBIx::ParseDSN;
+
+    my $dsn = parse_dsn( "dbi:OddBall:bucket=foo" )
+
+    $dsn->database; ## "foo"
 
 =head1 DESCRIPTION
 
-=for author to fill in:
-    Write a full description of the module and its features here.
-    Use subsections (=head2, =head3) as appropriate.
+This is a default DSN parser. It is not specific to any driver. It can
+safely be used as a base for driver specfic parsers.
+
+It handles the most common database drivers. See test files for
+details.
 
 =head1 DSN ATTIRIBUTES
 
@@ -276,19 +298,19 @@ This document describes DBIx::ParseDSN::Default version 0.9.0
 
 =head2 db
 
-Database attribute of the DSN. See L<names_for_database>.
+Database attribute of the DSN. See L</names_for_database>.
 
 =head2 host
 
 =head2 server
 
-Server address of the connection. If any. See L<names_for_host>.
+Server address of the connection. If any. See L</names_for_host>.
 
 =head2 port
 
-Port to connect to on the server. See L<names_for_port>
+Port to connect to on the server. See L</names_for_port>
 
-=head1 INTERFACE
+=head1 OTHER METHODS
 
 =head2 parse( $dsn )
 
@@ -297,11 +319,11 @@ A method used internally. Parses the DSN.
 =head2 driver_attr
 
 Any attributes to the driver, ie foo=bar in
-dbi:SQLite(foo=bar):db.sqlite. See parse_dsn in DBI.
+dbi:SQLite(foo=bar):db.sqlite. See L<DBI/parse_dsn>.
 
 =head2 driver_dsn
 
-The 3rd part of the dsn string, that is driver specific.
+The 3rd part of the dsn string which is driver specific.
 
 =head2 dsn_parts
 
@@ -397,8 +419,7 @@ L<http://rt.cpan.org>.
 
 =head1 SEE ALSO
 
-L<Some::Other::Module>,
-L<Also::Anoter::Module>
+L<DBIx::ParseDSN>
 
 =head1 AUTHOR
 

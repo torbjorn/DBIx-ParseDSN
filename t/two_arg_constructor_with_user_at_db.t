@@ -13,6 +13,6 @@ isa_ok( my $dsn = DBIx::ParseDSN::Default->new("dbi:Pg:", 'user@bar'), "DBIx::Pa
 
 is( $dsn->driver, "Pg", "one arg dsn; driver" );
 is( $dsn->scheme, "dbi", "one arg dsn; scheme" );
-is( $dsn->database, "foo", "bar arg dsn; database" );
+is( $dsn->database, "bar", "bar arg dsn; database" );
 
 done_testing;

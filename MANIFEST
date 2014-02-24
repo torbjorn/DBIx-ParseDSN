@@ -16,7 +16,8 @@ t/installed_parser.t
 t/two_arg_constructor_with_user_at_db.t
 t/lib/Foo.pm
 t/lib/TestUtils.pm
-t/lib/DBIx/ParseDSN
 t/lib/DBIx/ParseDSN/Bar.pm
 t/one_arg_constructor.t
 t/parse_dsn.t
+META.yml
+META.json

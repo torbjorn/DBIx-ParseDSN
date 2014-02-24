@@ -159,13 +159,11 @@ See L<DBIx::ParseDSN::Default/DSN ATTRIBUTES> for details.
 
 =item Module::Load::Conditional
 
+=item Moose
+
+=item MooseX::Aliases
+
 =back
-
-
-
-=head1 INCOMPATIBILITIES
-
-None reported.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -177,7 +175,8 @@ L<http://rt.cpan.org>.
 
 =head1 SEE ALSO
 
-L<DBI>,
+L<DBI>
+L<DBIx::ParseDSN::Default>
 
 =head1 AUTHOR
 

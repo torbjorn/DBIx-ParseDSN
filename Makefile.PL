@@ -20,6 +20,8 @@ WriteMakefile(
         'Test::Pod::Coverage'       => '1.08',
         'URI'                       => '1.60',
         'utf8::all'                 => '0.011',
+        'Class::Load'               => '0.20',
+        'Module::Load::Conditional' => '0.54',
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'DBIx-ParseDSN-*' },

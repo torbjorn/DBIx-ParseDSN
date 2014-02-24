@@ -8,7 +8,7 @@ use Carp qw< carp croak confess cluck >;
 use DBI; # will use parse_dsn from here
 use URI;
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.9.0');
 
 use Moose;
 
@@ -247,7 +247,7 @@ DBIx::ParseDSN::Default - A default DSN parser, moose based. You can subclass th
 
 =head1 VERSION
 
-This document describes DBIx::ParseDSN::Default version 0.0.1
+This document describes DBIx::ParseDSN::Default version 0.9.0
 
 
 =head1 SYNOPSIS

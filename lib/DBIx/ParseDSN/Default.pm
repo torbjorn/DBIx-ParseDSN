@@ -201,6 +201,8 @@ sub parse {
 
 }
 
+## intercept constructor to allow 1st arg DSN and 2nd arg user string,
+## which may contain db name
 around BUILDARGS => sub {
 
     my $orig = shift;
@@ -208,7 +210,9 @@ around BUILDARGS => sub {
 
     my @args = @_;
 
-    my %h;
+    ## if first arg is a hash, work with that, otherwise start a new
+    ## empty hash
+    my %h = %{ ref $args[0] eq "HASH" ? $args[0] : {} };
 
     ## 1st arg can be dsn if not a hash
     if ( defined $args[0] and ref $args[0] ne "HASH" ) {
@@ -221,7 +225,7 @@ around BUILDARGS => sub {
         }
     }
 
-    return $class->$orig($f);
+    return $class->$orig(\%h)
 
 };
 

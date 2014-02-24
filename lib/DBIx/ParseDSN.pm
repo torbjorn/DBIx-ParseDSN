@@ -60,7 +60,7 @@ sub parse_dsn {
 
     if ( not is_class_loaded($parser_module) ) {
 
-        if ( not can_load modules => $parser_module ) {
+        if ( not can_load modules => { $parser_module=>0 } ) {
             $parser_module = _default_parser;
         }
 

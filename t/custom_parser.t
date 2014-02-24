@@ -8,6 +8,7 @@ use Test::FailWarnings;
 use Test::Moose;
 
 {
+
     package DBIx::ParseDSN::Custom;
 
     use Moose;

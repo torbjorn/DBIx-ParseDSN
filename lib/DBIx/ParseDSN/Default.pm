@@ -5,7 +5,7 @@ use strict;
 use autodie;
 use warnings;
 use Carp qw< carp croak confess cluck >;
-use DBI; # will use parse_dsn
+use DBI; # will use parse_dsn from here
 use URI;
 
 use version; our $VERSION = qv('0.0.1');
@@ -24,7 +24,6 @@ has host     => ( isa => "Str", is => "rw" );
 has port     => ( isa => "Int", is => "rw" );
 has driver   => ( isa => "Str", is => "rw" );
 has scheme   => ( isa => "Str", is => "rw", default => "dbi" );
-
 
 has attr => (
     isa => "HashRef",
@@ -244,8 +243,7 @@ __END__
 
 =head1 NAME
 
-DBIx::ParseDSN::Default - [One line description of module's purpose here]
-
+DBIx::ParseDSN::Default - A default DSN parser, moose based. You can subclass this.
 
 =head1 VERSION
 

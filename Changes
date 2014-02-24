@@ -1,5 +1,7 @@
 Revision history for DBIx-ParseDSN
 
+0.9.0  Mon Feb 24 03:41:37 CET 2014
+       Working release
+
 0.0.1  Thu Jan 30 01:51:22 2014
        Initial release.
-

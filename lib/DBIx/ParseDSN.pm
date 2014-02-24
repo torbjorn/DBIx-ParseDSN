@@ -98,7 +98,7 @@ This document describes DBIx::ParseDSN version 0.9.0
 =head1 DESCRIPTION
 
 Exports parse_dsn that parses a DSN. It returns a
-C<DBIx::ParseDSN::Default> that has attributes from the dsn.
+L<DBIx::ParseDSN::Default> that has attributes from the dsn.
 
 This module looks for parser classes of the form DBIx::ParseDSN::Foo,
 where Foo literally matches the DSN driver, ie the 2nd part of the DSN

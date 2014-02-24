@@ -23,5 +23,4 @@ isa_ok( my $dsn2 = parse_dsn("dbi:Pg:database=foo;host=bar"), "DBIx::ParseDSN::D
 is( $dsn2->host, "bar", "dsn2; host" );
 is( $dsn2->server, "bar", "dsn2; server alias" );
 
-
 done_testing;

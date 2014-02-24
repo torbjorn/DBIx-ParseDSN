@@ -77,13 +77,11 @@ __END__
 
 =head1 NAME
 
-DBIx::ParseDSN - [One line description of module's purpose here]
-
+DBIx::ParseDSN - Parse DSN's, DBI connection strings.
 
 =head1 VERSION
 
 This document describes DBIx::ParseDSN version 0.9.0
-
 
 =head1 SYNOPSIS
 
@@ -95,6 +93,8 @@ This document describes DBIx::ParseDSN version 0.9.0
     $dsn->driver; ## SQLite
     $dsn->database; ## /var/foo.db
 
+    $dsn->dbd_driver; ## DBD::SQLite
+
 =head1 DESCRIPTION
 
 Exports parse_dsn that parses a DSN. It returns a
@@ -102,7 +102,7 @@ L<DBIx::ParseDSN::Default> that has attributes from the dsn.
 
 This module looks for parser classes of the form DBIx::ParseDSN::Foo,
 where Foo literally matches the DSN driver, ie the 2nd part of the DSN
-string.
+string. Case sensitive.
 
 Example: dbi:SQLite:database=/foo/bar would look for
 DBIx::ParseDSN::SQLite and use that as a parser, if found.
@@ -113,12 +113,19 @@ loaded, it will load it.
 It falls back to L<DBIx::ParseDSN::Default> if no specific parser is
 found.
 
+To implement not supported DBI driver strings, subclass
+L<DBIx::ParseDSN::Default> and reimplement C<sub parse> or change for
+example C<sub names_for_database> if database is just called something
+else.
+
 =head1 INTERFACE
 
 =head2 parse_dsn( $dsn );
 
 Parses a dsn and returns a L<DBIx::ParseDSN::Default> object that has
 properties reflecting the parameters found in the DSN.
+
+See L<DBIx::ParseDSN::Default/DSN ATTRIBUTES> for details.
 
 =head1 DEPENDENCIES
 

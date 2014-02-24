@@ -18,5 +18,10 @@ is( $dsn->database, "foo", "parse_dsn; database" );
 is( $dsn->db, "foo", "parse_dsn; db alias" );
 is( $dsn->dbname, "foo", "parse_dsn; dbname alias" );
 
+isa_ok( my $dsn2 = parse_dsn("dbi:Pg:database=foo;host=bar"), "DBIx::ParseDSN::Default" );
+
+is( $dsn2->host, "bar", "dsn2; host" );
+is( $dsn2->server, "bar", "dsn2; server alias" );
+
 
 done_testing;

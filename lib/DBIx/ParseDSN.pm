@@ -4,6 +4,10 @@ use warnings;
 use strict;
 use Carp;
 use Module::Load::Conditional qw/can_load/;
+use Class::Load qw/is_class_loaded/;
+use DBIx::ParseDSN::Default;
+use base 'Exporter';
+our @EXPORT = qw/parse_dsn/;
 
 use version; our $VERSION = qv('0.0.1');
 
@@ -54,8 +58,12 @@ sub parse_dsn {
 
     my $parser_module = __PACKAGE__ . "::" . $driver;
 
-    if ( can_load module => $parser_module ) {
-        $parser_module = _default_parser;
+    if ( not is_class_loaded($parser_module) ) {
+
+        if ( not can_load modules => $parser_module ) {
+            $parser_module = _default_parser;
+        }
+
     }
 
     return $parser_module->new($dsn);

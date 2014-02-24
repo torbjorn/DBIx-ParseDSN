@@ -1,4 +1,5 @@
-package DBIx::ParseDSN::Foo;
+package
+    DBIx::ParseDSN::Foo;
 
 use Moose;
 extends 'DBIx::ParseDSN::Default';

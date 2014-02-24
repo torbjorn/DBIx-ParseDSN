@@ -14,4 +14,9 @@ is( $dsn->driver, "Pg", "parse_dsn; driver" );
 is( $dsn->scheme, "dbi", "parse_dsn; scheme" );
 is( $dsn->database, "foo", "parse_dsn; database" );
 
+## some aliases:
+is( $dsn->db, "foo", "parse_dsn; db alias" );
+is( $dsn->dbname, "foo", "parse_dsn; dbname alias" );
+
+
 done_testing;

@@ -10,7 +10,7 @@ use Carp qw< carp croak confess cluck >;
 use DBI; # will use parse_dsn from here
 use URI;
 
-use version; our $VERSION = qv('0.9.0');
+use version; our $VERSION = qv('0.9.1');
 
 use Moose;
 use MooseX::Aliases;
@@ -255,7 +255,7 @@ L<DBIx::ParseDSN/parse_dsn> which is the intended way to achieve this.
 
 =head1 VERSION
 
-This document describes DBIx::ParseDSN::Default version 0.9.0
+This document describes DBIx::ParseDSN::Default version 0.9.1
 
 =head1 SYNOPSIS
 

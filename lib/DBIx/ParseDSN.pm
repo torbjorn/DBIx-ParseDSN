@@ -11,7 +11,7 @@ use DBIx::ParseDSN::Default;
 use base 'Exporter';
 our @EXPORT = qw/parse_dsn/;
 
-use version; our $VERSION = qv('0.9.0');
+use version; our $VERSION = qv('0.9.1');
 
 ## this is really a utility function, but there is no ::Util module
 ## yet, so it's here for now
@@ -83,7 +83,7 @@ DBIx::ParseDSN - Parse DSN's, DBI connection strings.
 
 =head1 VERSION
 
-This document describes DBIx::ParseDSN version 0.9.0
+This document describes DBIx::ParseDSN version 0.9.1
 
 =head1 SYNOPSIS
 

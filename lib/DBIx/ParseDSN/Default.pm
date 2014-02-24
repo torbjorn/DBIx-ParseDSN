@@ -268,12 +268,31 @@ This document describes DBIx::ParseDSN::Default version 0.9.0
     Write a full description of the module and its features here.
     Use subsections (=head2, =head3) as appropriate.
 
+=head1 DSN ATTIRIBUTES
+
+=head2 database
+
+=head2 dbname
+
+=head2 db
+
+Database attribute of the DSN. See L<names_for_database>.
+
+=head2 host
+
+=head2 server
+
+Server address of the connection. If any. See L<names_for_host>.
+
+=head2 port
+
+Port to connect to on the server. See L<names_for_port>
 
 =head1 INTERFACE
 
 =head2 parse( $dsn )
 
-Parse with default rules
+A method used internally. Parses the DSN.
 
 =head2 driver_attr
 
@@ -309,7 +328,10 @@ server/.
 
 =head2 names_for_port
 
-Name variations for the port attribute. This class uses port.
+Name variations for the port attribute. This class uses C<port>. This
+is included for completeness to follow the pattern used for
+C<database> and C<host> but is likely never to be anything other than
+just C<port>.
 
 =head2 known_attribute_hash
 

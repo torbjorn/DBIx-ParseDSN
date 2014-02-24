@@ -117,12 +117,8 @@ found.
 
 =head2 parse_dsn( $dsn );
 
-Parses a dsn and returns an object that has properties reflecting the
-parameters found in the DSN.
-
-=head1 CONFIGURATION AND ENVIRONMENT
-
-DBIx::ParseDSN requires no configuration files or environment variables.
+Parses a dsn and returns a L<DBIx::ParseDSN::Default> object that has
+properties reflecting the parameters found in the DSN.
 
 =head1 DEPENDENCIES
 

@@ -409,6 +409,10 @@ of the dsn string prefixed by DBD:: , ie DBD::SQLite.
 
 =item Module::Load::Conditional
 
+=item Moose
+
+=item MooseX::Aliases
+
 =back
 
 =head1 BUGS AND LIMITATIONS

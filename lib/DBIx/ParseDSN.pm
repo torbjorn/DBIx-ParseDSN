@@ -95,17 +95,8 @@ This document describes DBIx::ParseDSN version 0.9.0
     $dsn->driver; ## SQLite
     $dsn->database; ## /var/foo.db
 
-=for author to fill in:
-    Brief code example(s) here showing commonest usage(s).
-    This section will be as far as many users bother reading
-    so make it as educational and exeplary as possible.
-
-
 =head1 DESCRIPTION
 
-=for author to fill in:
-    Write a full description of the module and its features here.
-    Use subsections (=head2, =head3) as appropriate.
 
 
 =head1 INTERFACE
@@ -113,7 +104,7 @@ This document describes DBIx::ParseDSN version 0.9.0
 =head2 parse_dsn( $dsn );
 
 Parses a dsn and returns an object that has properties reflecting the
-parameters found.
+parameters found in the DSN.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -121,8 +112,6 @@ DBIx::ParseDSN requires no configuration files or environment variables.
 
 =head1 DEPENDENCIES
 
-
-None.
 
 
 =head1 INCOMPATIBILITIES

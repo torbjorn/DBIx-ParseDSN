@@ -97,7 +97,21 @@ This document describes DBIx::ParseDSN version 0.9.0
 
 =head1 DESCRIPTION
 
+Exports parse_dsn that parses a DSN. It returns a
+C<DBIx::ParseDSN::Default> that has attributes from the dsn.
 
+This module looks for parser classes of the form DBIx::ParseDSN::Foo,
+where Foo literally matches the DSN driver, ie the 2nd part of the DSN
+string.
+
+Example: dbi:SQLite:database=/foo/bar would look for
+DBIx::ParseDSN::SQLite and use that as a parser, if found.
+
+If DBIx::ParseDSN::Foo is loaded, it uses that. If the module can be
+loaded, it will load it.
+
+It falls back to DBIx::ParseDSN::Default if no specific parser is
+found.
 
 =head1 INTERFACE
 
@@ -111,6 +125,36 @@ parameters found in the DSN.
 DBIx::ParseDSN requires no configuration files or environment variables.
 
 =head1 DEPENDENCIES
+
+=over 4
+
+=item DBI
+
+=item Locale::Maketext::Lexicon
+
+=item Moose
+
+=item Test::FailWarnings
+
+=item Test::Moose
+
+=item Test::Most
+
+=item Test::Perl::Critic
+
+=item Test::Pod
+
+=item Test::Pod::Coverage
+
+=item URI
+
+=item utf8::all
+
+=item Class::Load
+
+=item Module::Load::Conditional
+
+=back
 
 
 

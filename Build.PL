@@ -4,7 +4,7 @@ use Module::Build;
 
 my $builder = Module::Build->new(
     module_name         => 'DBIx::ParseDSN',
-    license             => 'artistic2',
+    license             => 'artistic',
     dist_author         => 'Torbjørn Lindahl <torbjorn.lindahl@gmail.com>',
     dist_version_from   => 'lib/DBIx/ParseDSN.pm',
     requires => {
@@ -21,6 +21,8 @@ my $builder = Module::Build->new(
         'utf8::all'                 => '0.011',
         'Class::Load'               => '0.20',
         'Module::Load::Conditional' => '0.54',
+        'Moose'                     => '2.1005',
+        'MooseX::Aliases'           => '0.10',
     },
     add_to_cleanup      => [ 'DBIx-ParseDSN-*' ],
 );

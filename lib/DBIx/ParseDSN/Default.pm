@@ -1,5 +1,7 @@
 package DBIx::ParseDSN::Default;
 
+use v5.8.8;
+
 use utf8::all;
 use strict;
 use autodie;

@@ -22,6 +22,8 @@ WriteMakefile(
         'utf8::all'                 => '0.011',
         'Class::Load'               => '0.20',
         'Module::Load::Conditional' => '0.54',
+        'Moose'                     => '2.1005',
+        'MooseX::Aliases'           => '0.10',
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'DBIx-ParseDSN-*' },

@@ -1,5 +1,7 @@
 package DBIx::ParseDSN;
 
+use v5.8.8;
+
 use warnings;
 use strict;
 use Carp;

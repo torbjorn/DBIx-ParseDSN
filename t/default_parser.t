@@ -90,6 +90,7 @@ throws_ok {DBIx::ParseDSN::Default->new}
 
 note( "DSN test panel" );
 
+## dbi:ODBC:server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0
 test_dsn_basics(
     "dbi:ODBC:server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0",
     "ODBC",
@@ -106,6 +107,7 @@ test_dsn_basics(
     "server=1.2.3.4;port=5678;database=DBNAME;driver=FreeTDS;tds_version=8.0"
 );
 
+## dbi:Sybase:server=5.6.7.8:1234;database=DBNAME
 test_dsn_basics(
     "dbi:Sybase:server=5.6.7.8:1234;database=DBNAME",
     "Sybase",
@@ -118,7 +120,7 @@ test_dsn_basics(
     "server=5.6.7.8:1234;database=DBNAME"
 );
 
-
+## dbi:mysql:database=dbic_test;host=127.0.0.1
 test_dsn_basics(
     "dbi:mysql:database=dbic_test;host=127.0.0.1",
     "mysql",
@@ -131,6 +133,7 @@ test_dsn_basics(
     "database=dbic_test;host=127.0.0.1"
 );
 
+## dbi:Pg:database=dbic_test;host=127.0.0.1
 test_dsn_basics(
     "dbi:Pg:database=dbic_test;host=127.0.0.1",
     "Pg",
@@ -143,6 +146,7 @@ test_dsn_basics(
     "database=dbic_test;host=127.0.0.1"
 );
 
+## dbi:Firebird:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
 test_dsn_basics(
     "dbi:Firebird:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb",
     "Firebird",
@@ -154,6 +158,7 @@ test_dsn_basics(
     "dbname=/var/lib/firebird/2.5/data/dbic_test.fdb"
 );
 
+## dbi:InterBase:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb
 test_dsn_basics(
     "dbi:InterBase:dbname=/var/lib/firebird/2.5/data/dbic_test.fdb",
     "InterBase",
@@ -165,6 +170,7 @@ test_dsn_basics(
     "dbname=/var/lib/firebird/2.5/data/dbic_test.fdb"
 );
 
+## dbi:Oracle://localhost:1521/XE
 test_dsn_basics(
     "dbi:Oracle://localhost:1521/XE",
     "Oracle",
@@ -176,6 +182,7 @@ test_dsn_basics(
     "//localhost:1521/XE"
 );
 
+## dbi:ADO:PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;
 test_dsn_basics(
     "dbi:ADO:PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;",
     "ADO",
@@ -193,6 +200,7 @@ test_dsn_basics(
     "PROVIDER=sqlncli10;SERVER=tcp:172.24.2.10;MARSConnection=True;InitialCatalog=CIS;UID=cis_web;PWD=...;DataTypeCompatibility=80;"
 );
 
+## dbi:ODBC:Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb
 test_dsn_basics(
     "dbi:ODBC:Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb",
     "ODBC",
@@ -203,6 +211,30 @@ test_dsn_basics(
     },
     undef, undef,
     "Driver=Firebird;Dbname=/var/lib/firebird/2.5/data/hlaghdb.fdb"
+);
+
+## dbi:InterBase:db=/var/lib/firebird/2.5/data/hlaghdb.fdb
+test_dsn_basics(
+    "dbi:InterBase:db=/var/lib/firebird/2.5/data/hlaghdb.fdb",
+    "InterBase",
+    { database => "/var/lib/firebird/2.5/data/hlaghdb.fdb" },
+    {
+        db => "/var/lib/firebird/2.5/data/hlaghdb.fdb",
+    },
+    undef, undef,
+    "db=/var/lib/firebird/2.5/data/hlaghdb.fdb"
+);
+
+## dbi:Firebird:db=/var/lib/firebird/2.5/data/hlaghdb.fdb
+test_dsn_basics(
+    "dbi:Firebird:db=/var/lib/firebird/2.5/data/hlaghdb.fdb",
+    "Firebird",
+    { database => "/var/lib/firebird/2.5/data/hlaghdb.fdb" },
+    {
+        db => "/var/lib/firebird/2.5/data/hlaghdb.fdb",
+    },
+    undef, undef,
+    "db=/var/lib/firebird/2.5/data/hlaghdb.fdb"
 );
 
 done_testing;

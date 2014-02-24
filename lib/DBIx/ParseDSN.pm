@@ -110,7 +110,7 @@ DBIx::ParseDSN::SQLite and use that as a parser, if found.
 If DBIx::ParseDSN::Foo is loaded, it uses that. If the module can be
 loaded, it will load it.
 
-It falls back to DBIx::ParseDSN::Default if no specific parser is
+It falls back to L<DBIx::ParseDSN::Default> if no specific parser is
 found.
 
 =head1 INTERFACE

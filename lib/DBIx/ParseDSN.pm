@@ -103,6 +103,12 @@ This document describes DBIx::ParseDSN version 0.9.2
     $dsn2->port; ## 1521
     $dsn2->host; ## foobar
 
+    ## uri connector
+    my $dsn3 = parse_dsn( 'dbi:Oracle://myhost:1522/ORCL' )
+    $dsn3->database; ## ORCL
+    $dsn3->port; ## 1522
+    $dsn3->host; ## myhost
+
 =head1 DESCRIPTION
 
 Exports parse_dsn that parses a DSN. It returns a

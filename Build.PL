@@ -25,6 +25,7 @@ my $builder = Module::Build->new(
         'MooseX::Aliases'           => '0.10',
     },
     add_to_cleanup      => [ 'DBIx-ParseDSN-*' ],
+    configure_requires => { 'Module::Build' => 0.42 }
 );
 
 $builder->create_build_script();

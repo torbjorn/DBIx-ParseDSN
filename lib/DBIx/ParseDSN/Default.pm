@@ -15,11 +15,6 @@ use version; our $VERSION = qv('0.9.1');
 use Moose;
 use MooseX::Aliases;
 
-with( 'MooseX::OneArgNew' => {
-    type => 'Str',
-    init_arg => 'dsn',
-});
-
 has dsn => ( isa => "Str", is => "ro", required => 1 );
 
 has database => ( isa => "Str", is => "rw", alias => [qw/db dbname/] );

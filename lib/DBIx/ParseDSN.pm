@@ -24,7 +24,7 @@ sub _split_dsn {
 
 }
 
-## a method to check health status of parsers dsn
+## a method to check health status of parsers DSN
 sub _dsn_sanity_check {
 
     my $self = shift;
@@ -37,12 +37,12 @@ sub _dsn_sanity_check {
     ## group3 will be driver specific options. group3 may include colons
 
     if ( not defined $self->dsn ) {
-        carp "dsn isn't set";
+        carp "DSN isn't set";
         return;
     }
 
     if ( _split_dsn($self->dsn) != 3 ) {
-        carp "dsn does not contain the expected pattern with 2 separating colons.";
+        carp "DSN does not contain the expected pattern with 2 separating colons.";
     }
 
 }
@@ -124,7 +124,7 @@ else.
 
 =head2 parse_dsn( $dsn );
 
-Parses a dsn and returns a L<DBIx::ParseDSN::Default> object that has
+Parses a DSN and returns a L<DBIx::ParseDSN::Default> object that has
 properties reflecting the parameters found in the DSN.
 
 See L<DBIx::ParseDSN::Default/DSN ATTRIBUTES> for details.

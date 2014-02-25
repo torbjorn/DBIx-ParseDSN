@@ -10,7 +10,7 @@ t/perlcritic.t
 t/pod-coverage.t
 t/pod.t
 t/default_parser.t
-t/split_dns.t
+t/split_dsn.t
 t/custom_parser.t
 t/installed_parser.t
 t/two_arg_constructor_with_user_at_db.t

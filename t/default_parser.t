@@ -255,4 +255,20 @@ test_dsn_basics(
     "host=foobar;sid=DB;port=1521"
 );
 
+## dbi:Oracle://myhost:1522/ORCL
+test_dsn_basics(
+    "dbi:Oracle://myhost:1522/ORCL",
+    "Oracle",
+    {
+        database => "ORCL",
+        port => 1522,
+        host => "myhost",
+    },
+    {
+        "//myhost:1522/ORCL" => undef,
+    },
+    undef, undef,
+    "//myhost:1522/ORCL"
+);
+
 done_testing;

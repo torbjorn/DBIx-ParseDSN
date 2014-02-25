@@ -55,12 +55,11 @@ around host => sub {
 
 sub names_for_database {
     return (
-        qw/database dbname namd db/,
-
+        qw/database dbname name db/,
+        "sid", ## Oracle
         "file name", "initialcatalog", ## from ADO, but generic
                                         ## enough to allow in this
                                         ## module
-
         );
 }
 sub names_for_host {

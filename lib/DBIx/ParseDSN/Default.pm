@@ -333,7 +333,7 @@ The 5 values returned by DBI->parse_dsn
 
 =head2 is_local
 
-True if the dns is local. File based db drivers are local, and network
+True if the dsn is local. File based db drivers are local, and network
 connections to localhost or 127.0.0.1 are local.
 
 =head2 is_remote

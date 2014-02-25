@@ -218,7 +218,8 @@ around BUILDARGS => sub {
     ## look for db in user string - will not override one found in dsn
     if ( defined $args[1] ) {
         if ( $args[1] =~ /@(.+)$/ ) {
-            $h{database} = $1;
+            (my $db = $1) =~ s|/.*||;
+            $h{database} = $db;
         }
     }
 

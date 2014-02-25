@@ -97,6 +97,12 @@ This document describes DBIx::ParseDSN version 0.9.2
 
     $dsn->dbd_driver; ## DBD::SQLite
 
+    ## information in user string
+    my $dsn2 = parse_dsn( 'dbi:Oracle:host=foobar;port=1521', 'scott@DB/tiger' )
+    $dsn2->database; ## DB
+    $dsn2->port; ## 1521
+    $dsn2->host; ## foobar
+
 =head1 DESCRIPTION
 
 Exports parse_dsn that parses a DSN. It returns a

@@ -237,4 +237,22 @@ test_dsn_basics(
     "db=/var/lib/firebird/2.5/data/hlaghdb.fdb"
 );
 
+## dbi:Oracle:DB
+test_dsn_basics(
+    "dbi:Oracle:host=foobar;sid=DB;port=1521",
+    "Oracle",
+    {
+        database => "DB",
+        port => 1521,
+        host => "foobar",
+    },
+    {
+        sid => "DB",
+        port => 1521,
+        host => "foobar",
+    },
+    undef, undef,
+    "host=foobar;sid=DB;port=1521"
+);
+
 done_testing;

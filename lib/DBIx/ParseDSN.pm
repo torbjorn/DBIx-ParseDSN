@@ -129,42 +129,6 @@ properties reflecting the parameters found in the DSN.
 
 See L<DBIx::ParseDSN::Default/DSN ATTRIBUTES> for details.
 
-=head1 DEPENDENCIES
-
-=over 4
-
-=item DBI
-
-=item Locale::Maketext::Lexicon
-
-=item Moose
-
-=item Test::FailWarnings
-
-=item Test::Moose
-
-=item Test::Most
-
-=item Test::Perl::Critic
-
-=item Test::Pod
-
-=item Test::Pod::Coverage
-
-=item URI
-
-=item utf8::all
-
-=item Class::Load
-
-=item Module::Load::Conditional
-
-=item Moose
-
-=item MooseX::Aliases
-
-=back
-
 =head1 BUGS AND LIMITATIONS
 
 No bugs have been reported.

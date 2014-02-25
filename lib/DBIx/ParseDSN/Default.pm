@@ -372,44 +372,6 @@ This method is mainly for internal use.
 The perl module driver for this specific dsn. Currently the 2nd value
 of the dsn string prefixed by DBD:: , ie DBD::SQLite.
 
-=head1 DEPENDENCIES
-
-=head1 DEPENDENCIES
-
-=over 4
-
-=item DBI
-
-=item Locale::Maketext::Lexicon
-
-=item Moose
-
-=item Test::FailWarnings
-
-=item Test::Moose
-
-=item Test::Most
-
-=item Test::Perl::Critic
-
-=item Test::Pod
-
-=item Test::Pod::Coverage
-
-=item URI
-
-=item utf8::all
-
-=item Class::Load
-
-=item Module::Load::Conditional
-
-=item Moose
-
-=item MooseX::Aliases
-
-=back
-
 =head1 BUGS AND LIMITATIONS
 
 No bugs have been reported.

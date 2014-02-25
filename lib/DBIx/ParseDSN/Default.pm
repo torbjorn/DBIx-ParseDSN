@@ -156,6 +156,12 @@ sub parse {
 
         my($k,$v) = split /=/, $_, 2;
 
+        ## An Oracle special case that would otherwise mess things up
+        if ( $self->driver eq "Oracle" and $k eq "SERVER" ) {
+            ## example: SERVER=POOLED
+            next;
+        }
+
         ## a //foo:xyz/bar type of uri, like Oracle
         if ( $k =~ m|^//.+/.+| and not defined $v and @pairs == 1 ) {
 
@@ -193,6 +199,12 @@ sub parse {
 
         $self->set_attr($k, $v);
 
+    }
+
+    ## Another Oracle speciality, strip ":POOLED" from db
+    if ( $self->driver eq "Oracle" and
+             ( my $new_db = $self->database ) =~ s/:POOLED$// ) {
+        $self->database($new_db);
     }
 
 }

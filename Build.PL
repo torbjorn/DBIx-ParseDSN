@@ -10,7 +10,6 @@ my $builder = Module::Build->new(
     requires => {
         'DBI'                       => '1.63',
         'Locale::Maketext::Lexicon' => '0.96',
-        'Moose'                     => '2.1005',
         'Test::FailWarnings'        => '0.008',
         'Test::Moose'               => '2.1005',
         'Test::Most'                => '0.31',
@@ -21,8 +20,9 @@ my $builder = Module::Build->new(
         'utf8::all'                 => '0.011',
         'Class::Load'               => '0.20',
         'Module::Load::Conditional' => '0.54',
-        'Moose'                     => '2.1005',
-        'MooseX::Aliases'           => '0.10',
+        'Moo'                       => '2.1005',
+        'MooX::Aliases'             => '0.10',
+        'MooX::HandlesVia'          => '0.001005',
     },
     add_to_cleanup      => [ 'DBIx-ParseDSN-*' ],
     configure_requires => { 'Module::Build' => 0.42 }

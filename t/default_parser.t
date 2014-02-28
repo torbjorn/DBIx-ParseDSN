@@ -13,7 +13,7 @@ use_ok("DBIx::ParseDSN::Default");
 
 ## no dsn causes error
 throws_ok {DBIx::ParseDSN::Default->new}
-    qr/\QAttribute (dsn) is required/,
+    qr/\Qrequired/,
     "dsn is required argument";
 
 ## a plain SQLite dsn

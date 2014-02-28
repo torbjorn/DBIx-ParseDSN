@@ -12,20 +12,21 @@ use URI;
 
 use version; our $VERSION = qv('0.9.2');
 
-use Moose;
-use MooseX::Aliases;
+use Moo;
+use namespace::clean;
+use MooX::Aliases;
+use MooX::HandlesVia;
 
-has dsn => ( isa => "Str", is => "ro", required => 1 );
+has dsn => ( is => "ro", required => 1 );
 
-has database => ( isa => "Str", is => "rw", alias => [qw/db dbname/] );
-has host     => ( isa => "Str", is => "rw", alias => "server" );
-has port     => ( isa => "Int", is => "rw" );
-has driver   => ( isa => "Str", is => "rw" );
-has scheme   => ( isa => "Str", is => "rw", default => "dbi" );
+has database => ( is => "rw", alias => [qw/db dbname/] );
+has host     => ( is => "rw", alias => "server" );
+has port     => ( is => "rw" );
+has driver   => ( is => "rw" );
+has scheme   => ( is => "rw", default => "dbi" );
 
 has attr => (
-    isa => "HashRef",
-    traits => ["Hash"],
+    handles_via => "Hash",
     is => "ro",
     default => sub {{}},
     handles => {
@@ -276,7 +277,7 @@ This document describes DBIx::ParseDSN::Default version 0.9.2
     {
       package DBIx::ParseDSN::OddBall;
 
-      use Moose;
+      use Moo;
       extends 'DBIx::ParseDSN::Default';
 
       sub names_for_database{ return qw/bucket/ }

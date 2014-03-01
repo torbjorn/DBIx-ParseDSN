@@ -5,13 +5,12 @@ use warnings;
 use utf8::all;
 use Test::Most;
 use Test::FailWarnings;
-use Test::Moose;
 
 {
 
     package DBIx::ParseDSN::Custom;
 
-    use Moose;
+    use Moo;
     extends "DBIx::ParseDSN::Default";
 
     sub names_for_database {

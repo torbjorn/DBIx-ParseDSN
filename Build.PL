@@ -10,7 +10,6 @@ my $builder = Module::Build->new(
     requires => {
         'DBI'                       => '1.628',
         'Test::FailWarnings'        => '0.008',
-        'Test::Moose'               => '2.1005',
         'Test::Most'                => '0.31',
         'Test::Perl::Critic'        => '1.02',
         'Test::Pod'                 => '1.48',

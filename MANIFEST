@@ -19,3 +19,5 @@ t/lib/TestUtils.pm
 t/lib/DBIx/ParseDSN/Bar.pm
 t/one_arg_constructor.t
 t/parse_dsn.t
+META.yml
+META.json
